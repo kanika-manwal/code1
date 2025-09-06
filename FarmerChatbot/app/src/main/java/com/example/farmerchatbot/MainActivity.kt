@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun getGeminiResponse(query: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val url = URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=")
+                val url = URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$geminiApiKey")
                 val postData = """
                     {
                         "contents": [{"parts": [{"text": "$query"}]}]
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val location = query.split(" ").lastOrNull() ?: "Delhi"
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val url = URL("https://api.openweathermap.org/data/2.5/weather?q=$location&appid=")
+                val url = URL("https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$openWeatherApiKey&units=metric")
                 val response = url.readText()
                 val obj = JSONObject(response)
                 val weather = obj.getJSONArray("weather").getJSONObject(0).getString("description")
